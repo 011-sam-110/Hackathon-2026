@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
 app = FastAPI()
+from utils import llm
 
 
 
@@ -30,4 +31,6 @@ def receive_text(data: LargeTextData):
     print(f"User said: {data.user_prompt}")
     print(f"Screen contained {len(data.screen_text)} characters")
     
-    return {"status": "success", "processed": True}
+    response = llm.sendMessage(data.user_prompt, data.screen_text)
+    print(response)
+    return response
