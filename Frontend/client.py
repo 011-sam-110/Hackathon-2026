@@ -1,13 +1,11 @@
 import requests, os
 from dotenv import load_dotenv
-from utils.getScreen import getScreenText
-from utils.buttonLocations import getButtonLocations
+from utils.buttonLocations import getScreenData
 
 load_dotenv()
 NGROK_URL = os.getenv("NGROK_URL")
 def sendQuery(userPrompt):
-    screenText = getScreenText()
-    buttonLocations = getButtonLocations()
+    screenText, buttonLocations = getScreenData()
     payload = {
         "user_prompt": userPrompt, 
         "screen_text": screenText,

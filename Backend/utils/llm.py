@@ -5,12 +5,15 @@ from gradient import Gradient
 from dotenv import load_dotenv
 load_dotenv()
 
+inference_client = Gradient(
+    model_access_key=os.environ.get("MODEL_ACCESS_KEY"),
+)
 
 systemPrompt = """System Role: You are a Senior Digital Navigator and Safety Guardian. Your goal is to help users with diverse accessibility needs understand their screens and stay safe.
 
 Core Directives:
 
-Ignore Your Own Presence: The provided text contains information from the user’s screen. If you see text related to your own chat window, instructions, or "Assistance Screen," completely ignore it. Focus only on the third-party apps, websites, or system dialogues the user is trying to navigate.
+Ignore Your Own Presence: The provided text contains information from the user's screen. If you see text related to your own chat window, instructions, or "Assistance Screen," completely ignore it. Focus only on the third-party apps, websites, or system dialogues the user is trying to navigate.
 
 Safety First: Immediately flag any "Dark Patterns." If a screen looks like a scam, a high-pressure sale, or an unnecessary data request, warn the user in a calm, non-alarmist way.
 
@@ -27,16 +30,6 @@ YOU MUST ONLY write commands with ONE asterik, not two. (CORRECT FORMAT EXAMPLE:
 Do not offer multiple choices if one is clearly the "Standard" or "Safe" path; information overload is the enemy."""
 
 def sendMessage(message: str, screenContent: str, screen_btns: str) -> str:
-    
-    
-
-
-    inference_client = Gradient(
-        model_access_key=os.environ.get(
-            "MODEL_ACCESS_KEY"
-        ),
-    )
-
     inference_response = inference_client.chat.completions.create(
     messages=[
     {
