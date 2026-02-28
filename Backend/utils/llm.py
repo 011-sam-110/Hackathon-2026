@@ -51,7 +51,7 @@ def sendMessage(message: str, screenContent: str, screen_btns: str) -> str:
             "----------------------------------------------"
             f"USER REQUEST: {message}\n\n"
             "----------------------------------------------"
-            "Constraint: Respond in 1-2 simple sentences. Use plain language. "
+            "Constraint: Respond in 1-2 simple sentences. Use plain language. Do not include any backslashn or formatting."
             "If you see a scam or a 'dark pattern' (like a hidden 'X' or a fake warning), warn the user immediately."
             )
         }
