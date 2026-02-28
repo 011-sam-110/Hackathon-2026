@@ -1,3 +1,3 @@
 import pyautogui as pag
  
-pag.click(178,1008)
+pag.click(1438,670)
