@@ -25,8 +25,6 @@ def get_response():
 @app.get("/items/{item_id}")
 def read_item(item_id: int, q: str | None = None):
     return {"item_id": item_id, "q": q}
-
-
 class LargeTextData(BaseModel):
     user_prompt: str
     screen_text: str
@@ -37,7 +35,6 @@ def receive_text(data: LargeTextData):
     print(f"Screen contained {len(data.screen_text)} characters")
     
     response = llm.sendMessage(data.user_prompt, data.screen_text)
-    
-    print(f"Response AAAAAA: {response}")
+
     LOG.info(f"LLM response: {response}")
     return response
