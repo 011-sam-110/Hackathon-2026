@@ -25,7 +25,7 @@ DO NOT guess/estimate screen cordiantes. Use your given button locations. You ha
 DO NOT write incorrect commands in asteriks. If you are running a command, you must write it in the correct format, changing only the coordinates. THE FORMAT IS **click [x,y]**. 
 Do not offer multiple choices if one is clearly the "Standard" or "Safe" path; information overload is the enemy."""
 
-def sendMessage(message: str, screenContent: str) -> str:
+def sendMessage(message: str, screenContent: str, screen_btns: str) -> str:
     
     
 
@@ -62,3 +62,5 @@ def sendMessage(message: str, screenContent: str) -> str:
 
     response = inference_response.choices[0].message.content
     return response
+
+sendMessage("test", "On your screen, there is a big pop-up that says 'Congratulations! You've won a free iPhone! Click here to claim your prize!' There are two buttons: a big green one that says 'Claim Prize' and a small 'X' in the top right corner to close the pop-up. In the background, you can see your email inbox and some icons on your desktop.")

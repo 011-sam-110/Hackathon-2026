@@ -39,7 +39,7 @@ def receive_text(data: LargeTextData):
     print(f"Screen contained {len(data.screen_text)} characters")
     print(f"Screen buttons: {data.screen_btns}")
     
-    response = llm.sendMessage(data.user_prompt, data.screen_text)
+    response = llm.sendMessage(data.user_prompt, data.screen_text, data.screen_btns)
 
     LOG.info(f"LLM response: {response}")
     return response
