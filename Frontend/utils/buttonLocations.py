@@ -6,7 +6,7 @@ import numpy as np
 # Use gpu=True if you have an NVIDIA card for 10x speed
 reader = easyocr.Reader(['en'], gpu=False)
 
-def getButtonLocations():
+def getButtonLocations2():
     # 1. Capture the screen
     screenshot = pyscreeze.screenshot()
     # Convert PIL image to a format EasyOCR/OpenCV understands (numpy array)
@@ -38,12 +38,13 @@ def getButtonLocations():
 
     return visual_elements
 
-# --- Execution ---
-elements = getButtonLocations()
+def getButtonLocations():
+    # --- Execution ---
+    elements = getButtonLocations2()
 
-# Format for your LLM
-prompt_context = "Buttons on screen:\n"
-for el in elements:
-    prompt_context += f"- '{el['text']}' at [x:{el['x']}, y:{el['y']}] (Size: {el['w']}x{el['h']})\n"
+    # Format for your LLM
+    prompt_context = "Buttons on screen:\n"
+    for el in elements:
+        prompt_context += f"- '{el['text']}' at [x:{el['x']}, y:{el['y']}] (Size: {el['w']}x{el['h']})\n"
 
-print(prompt_context)
+    return prompt_context
