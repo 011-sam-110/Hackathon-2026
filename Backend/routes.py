@@ -1,9 +1,14 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
-app = FastAPI()
+import uvicorn
+app = FastAPI(title="My API", description="This is a sample API", version="1.0.0")
 from utils import llm
+import logging
 
 
+LOG = logging.getLogger(__name__)
+LOG.info("API is starting up")
+LOG.info(uvicorn.Config.asgi_version)
 
 @app.get("/")
 def read_root():
@@ -32,5 +37,7 @@ def receive_text(data: LargeTextData):
     print(f"Screen contained {len(data.screen_text)} characters")
     
     response = llm.sendMessage(data.user_prompt, data.screen_text)
-    print(response)
+    LOG.info("before response")
+    print(f"Response AAAAAA: {response}")
+    LOG.info(f"response: {response}")
     return response

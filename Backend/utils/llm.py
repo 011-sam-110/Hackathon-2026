@@ -5,7 +5,6 @@ from gradient import Gradient
 from dotenv import load_dotenv
 load_dotenv()
 
-print(os.environ.get("MODEL_ACCESS_KEY"))
 def sendMessage(message: str, screenContent: str) -> str:
     
     
@@ -28,4 +27,5 @@ def sendMessage(message: str, screenContent: str) -> str:
         max_tokens=1000
     )
 
-    return inference_response.choices[0].message.content
+    response = inference_response.choices[0].message.content
+    return response
