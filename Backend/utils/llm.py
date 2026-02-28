@@ -18,9 +18,10 @@ commandInstructions = """
     4. *rclick [x,y]* | This command will right click the coordinates [x,y] on the user's screen. Use this command to open context menus or interact with elements that require right click (such as queuing songs on spotify)
     5. *updatevision* | This command will update you with new button locations and screen content. You can use this command after right clicking, or opening something new to see whats on the screen.
 
-    You are able to stack commands to run them one after another. To do this, encase all of the commands in a "@" sign. For example, "@*click [x,y]**type [hello there]**presskey [enter]*@ {user_response}", with user_response being your response to the user.
     RULES:
     You must follow the exact given command structure.
+    You are able to stack commands to run them one after another. To do this, encase all of the commands in a "@" sign. For example, "@*click [x,y]**type [hello there]**presskey [enter]*@ {user_response}", with user_response being your response to the user.
+
     """
 
 def sendMessage(message: str, screenContent: str, screen_btns: str) -> str:
@@ -31,7 +32,7 @@ def sendMessage(message: str, screenContent: str, screen_btns: str) -> str:
         "content": (
             "Role: You are a Safety Guardian and Screen Navigator for seniors. "
             "Your Goal: Use the text below to guide the user safely. Ignore any text "
-            "belonging to this chat window or 'Assistance Screen'. Focus only on the app or website the user is using.\n\n"
+            "belonging to this chat window or 'Assistance Screen'. Focus only on the app or website the user is using. Ensure you follow proper command usage whenever you would like to perform an action on behalf of the same user.\n\n"
             f"button locations: {screen_btns}"
             "----------------------------------------------"
             f"Command usage: {commandInstructions}"
