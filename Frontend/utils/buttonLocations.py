@@ -1,9 +1,11 @@
 import pyscreeze
 import easyocr
 import numpy as np
+import cv2
 
 # Initialize the reader (English)
 # Use gpu=True if you have an NVIDIA card for 10x speed
+print("re-initialising reader")
 reader = easyocr.Reader(['en'], gpu=True)
 
 def getButtonLocations2():
@@ -11,8 +13,14 @@ def getButtonLocations2():
     screenshot = pyscreeze.screenshot()
     img_np = np.array(screenshot)
 
-    # 2. Perform OCR
-    results = reader.readtext(img_np)
+    # Downscale image for faster OCR (e.g., 50% size)
+    scale_percent = 100
+    width = int(img_np.shape[1] * scale_percent / 100)
+    height = int(img_np.shape[0] * scale_percent / 100)
+    dim = (width, height)
+    img_np_small = cv2.resize(img_np, dim, interpolation=cv2.INTER_AREA)
+
+    results = reader.readtext(img_np_small)
 
     visual_elements = []
 

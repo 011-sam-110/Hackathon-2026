@@ -1,3 +1,5 @@
-import pyautogui as pag
- 
-pag.click(1438,670)
+
+
+
+
+click("click [223, 523]")

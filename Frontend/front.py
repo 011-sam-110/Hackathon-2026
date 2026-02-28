@@ -11,14 +11,16 @@ import pyautogui
 
 def click(cmd):
     print("clicking")
-    _, coords = cmd.split(" ")
-    coords = coords.replace("[","").replace("]","").split(",")
-    pyautogui.click(int(coords[0]), int(coords[1]))
+    _, xcord, ycord = cmd.split()
+    
+    xcord = xcord.replace("[","").replace(",","")
+    ycord = ycord.replace("]","")
+    pyautogui.click(int(xcord), int(ycord))
 
 def extractCMD(prompt):
     try:
         cmd,prompt = prompt.split("*")[1:3]
-        return cmd.strip(), prompt.strip()
+        return cmd.strip(), prompt.strip().replace('"','').replace("\n","")
     
     except Exception as e:
         return None, prompt.strip()
