@@ -10,6 +10,7 @@ import os
 import pyautogui
 
 def click(cmd):
+    print("clicking")
     _, coords = cmd.split(" ")
     coords = coords.replace("[","").replace("]","").split(",")
     pyautogui.click(int(coords[0]), int(coords[1]))
@@ -26,7 +27,9 @@ class Api:
         if not question:
             return {"response": "Please enter a question."}
         ai_response = client.sendQuery(question)
+        print(f"AI response: {ai_response}")
         cmd, prompt = extractCMD(ai_response)
+        print(f"Extracted command: {cmd}, Remaining prompt: {prompt}")
         if cmd != None:
             if "click" in cmd:
                 click(cmd)

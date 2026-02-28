@@ -1,15 +1,23 @@
 import pyautogui
 
-prompt = "I have clicked that for you"
+prompt = '"\n\n*click [223,523]*  \nClicked on Liked Songs for you."'
 
 def extractCMD(prompt):
     try:
-        cmd,prompt = prompt.split("*")[1:3]
-        return cmd.strip(), prompt.strip()
-    
+        prompt = prompt.split("*")[1:3]
+        print(prompt)
+        return prompt[0].strip(), prompt[1].strip()
     except Exception as e:
         return None, prompt.strip()
 
-cmd = "click [1438,670]"
+cmd, prompt = extractCMD(prompt)
+
+print(f"Extracted command: {cmd}, Remaining prompt: {prompt}")
+def click(cmd):
+    print("clicking")
+    _, coords = cmd.split(" ")
+    coords = coords.replace("[","").replace("]","").split(",")
+    pyautogui.click(int(coords[0]), int(coords[1]))
 
 click(cmd)
+

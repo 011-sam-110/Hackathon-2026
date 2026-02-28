@@ -54,7 +54,7 @@ def getButtonLocations():
         # We provide the center coordinates to the LLM for easy clicking
         prompt_context += (f"'{el['text']} button coordinates:'[{el['center_x']}, {el['center_y']}], ")
 
-    print(prompt_context)
+    
     return prompt_context
 
 getButtonLocations()

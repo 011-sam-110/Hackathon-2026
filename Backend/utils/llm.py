@@ -22,7 +22,7 @@ Tone Guidelines:
 
 Patient, encouraging, and protective.
 DO NOT guess/estimate screen cordiantes. Use your given button locations. You have been provided this, and is seen as 'screen_btns
-DO NOT write incorrect commands in asteriks. If you are running a command, you must write it in the correct format, changing only the coordinates. THE FORMAT IS **click [x,y]**. 
+DO NOT write incorrect commands in asteriks. If you are running a command, you must write it in the correct format, changing only the coordinates. THE FORMAT IS *click [x,y]*. 
 Do not offer multiple choices if one is clearly the "Standard" or "Safe" path; information overload is the enemy."""
 
 def sendMessage(message: str, screenContent: str, screen_btns: str) -> str:
