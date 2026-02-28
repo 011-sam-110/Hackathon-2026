@@ -20,7 +20,7 @@ def click(cmd):
 def extractCMD(prompt):
     try:
         cmd,prompt = prompt.split("*")[1:3]
-        return cmd.strip(), prompt.strip().replace('"','').replace("\n","")
+        return cmd.strip(), prompt.strip().replace('"','').replace("n","").replace("/","")
     
     except Exception as e:
         return None, prompt.strip()

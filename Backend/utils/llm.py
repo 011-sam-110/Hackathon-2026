@@ -12,10 +12,12 @@ inference_client = Gradient(
 commandInstructions = """
     "Command Usage: You are able to run commands. It's imperative that you ONLY write commands in the EXACT format, and follow all command rules. Below is a list of commands you have to your disposal. If you want to use a command, write it at the START of your response, and then write the rest of your response after the command. Always follow the format below, and only write commands in the specified format. Do not deviate from the format, or you will break the system. If you do not have a command to use, just write your response without any commands. Do not mention commands in your response if you are not using them. Always follow the rules when using them.
     COMMAND LIST:
-    1. *click [x,y]* | This command will click the coordinates [x,y] on the user's screen. Do not guess coordinates, you are provided them with every prompt (see given button locations)
+    1. *lclick [x,y]* | This command will left click the coordinates [x,y] on the user's screen. Do not guess coordinates, you are provided them with every prompt (see given button locations)
     2. *type [text]* | This command will type the given text through the users keyboard. You will need to click on fields before using this command to type them. DO NOT use this command if have not clicked into the field you are typing into. 
     3. *presskey [key] | This command will press the given key on the user's keyboard. You can only press one key at a time. You may need to use this to press enter, to pause music or enter a field submission. If entering into a field, ALWAYS prefer to click a button if one is available.
-    
+    4. *rclick [x,y]* | This command will right click the coordinates [x,y] on the user's screen. Use this command to open context menus or interact with elements that require right click (such as queuing songs on spotify)
+    5. *updatevision* | This command will update you with new button locations and screen content. You can use this command after right clicking, or opening something new to see whats on the screen.
+
     You are able to stack commands to run them one after another. To do this, encase all of the commands in a "@" sign. For example, "@*click [x,y]**type [hello there]**presskey [enter]*@ {user_response}", with user_response being your response to the user.
     RULES:
     You must follow the exact given command structure.
