@@ -1,45 +1,42 @@
-import pyscreeze
-import easyocr
+import mss
 import numpy as np
-import cv2
+import pytesseract as pt
 
-reader = easyocr.Reader(['en'], gpu=True)
+pt.pytesseract.tesseract_cmd = r"C:\Users\sampo\AppData\Local\Programs\Tesseract-OCR\tesseract.exe"
 
-SCALE_PERCENT = 50
-SCALE_FACTOR = 100 / SCALE_PERCENT
+MIN_CONFIDENCE = 30
 
 
 def _run_ocr():
-    screenshot = pyscreeze.screenshot()
-    img_np = np.array(screenshot)
+    with mss.mss() as sct:
+        mon = sct.monitors[1]
+        screenshot = sct.grab(mon)
+        img_np = np.array(screenshot)
 
-    width = int(img_np.shape[1] * SCALE_PERCENT / 100)
-    height = int(img_np.shape[0] * SCALE_PERCENT / 100)
-    img_small = cv2.resize(img_np, (width, height), interpolation=cv2.INTER_AREA)
-
-    results = reader.readtext(img_small)
+    data = pt.image_to_data(img_np, output_type=pt.Output.DICT)
 
     visual_elements = []
     full_text_parts = []
 
-    for (bbox, text, prob) in results:
-        top_left = bbox[0]
-        bottom_right = bbox[2]
+    for i in range(len(data["text"])):
+        text = data["text"][i].strip()
+        conf = int(data["conf"][i])
 
-        # Scale coordinates back to real screen positions
-        x = int(top_left[0] * SCALE_FACTOR)
-        y = int(top_left[1] * SCALE_FACTOR)
-        w = int((bottom_right[0] - top_left[0]) * SCALE_FACTOR)
-        h = int((bottom_right[1] - top_left[1]) * SCALE_FACTOR)
+        if not text or conf < MIN_CONFIDENCE:
+            continue
 
-        center_x = x + (w // 2)
-        center_y = y + (h // 2)
+        x = data["left"][i]
+        y = data["top"][i]
+        w = data["width"][i]
+        h = data["height"][i]
+
+        center_x = x + w // 2
+        center_y = y + h // 2
 
         visual_elements.append({
             "text": text,
-            "confidence": f"{prob:.2f}",
             "center_x": center_x,
-            "center_y": center_y
+            "center_y": center_y,
         })
 
         full_text_parts.append(text)
