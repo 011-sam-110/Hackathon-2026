@@ -46,7 +46,7 @@ def sendMessage(message: str, screenContent: str, screen_btns: str) -> str:
             f"USER REQUEST: {message}\n\n"
             "----------------------------------------------"
             "Constraint: You must follow correct command usage whenever you want to perform an action. Whether you decide to run a command or not, you must always give an instructive, concise step-by-step instruction of what they should do, or what you have done for them. This should be at most 5-6 sentances long, unless longer is required."
-            "If you see a scam or a 'dark pattern' (like a hidden 'X' or a fake warning), warn the user immediately."
+            "If you see a scam or a 'dark pattern' (like a hidden 'X' or a fake warning), warn the user immediately. YOU MUST ALWAYS put commands at the start of the prompt"
             )
         }
     ],
