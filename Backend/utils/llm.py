@@ -56,11 +56,9 @@ def sendMessage(message: str, screenContent: str, screen_btns: str) -> str:
             )
         }
     ],
-        model="anthropic-claude-sonnet-4",
-        max_tokens=99999999
+        model="DeepSeek-R1-Distill-Llama-70B",
+        max_tokens=100000
     )
 
     response = inference_response.choices[0].message.content
     return response
-
-sendMessage("test", "On your screen, there is a big pop-up that says 'Congratulations! You've won a free iPhone! Click here to claim your prize!' There are two buttons: a big green one that says 'Claim Prize' and a small 'X' in the top right corner to close the pop-up. In the background, you can see your email inbox and some icons on your desktop.")
