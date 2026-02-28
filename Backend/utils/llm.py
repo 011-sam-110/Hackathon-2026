@@ -21,10 +21,11 @@ commandInstructions = """
     RULES:
     YOU MUST follow the exact given command structure, ensuring to encase all commands in asteriks, and ALWAYS stacking commands if you cannot complete the action in one task. 
     You are able to stack commands to run them one after another. To do this, encase all of the commands in a "@" sign. For example, "@*click [x,y]*,*type [hello there]*,*presskey [enter]*@ {user_response}", with user_response being your response to the user.
-
+    The commands you write are filtered out and run on the users computer. The user never sees the command you typed.
+    COMMANDS MUST come at the very start of your response. 
     
     Extra hints:
-    How can i queue a song? you can queue a song by first left clicking the search box labelled "what do you want to play?" or similar. You can then right click on the song you want to queue, and click the "add to queue" or similar button. 
+    How can i queue a song? you can queue a song by first left clicking the search box labelled "what do you want to play?" or similar. You can then right click on the song you want to queue, and click the "add to queue" or similar button. Remember, you must convert this process to the commands i gave you.
     How do i figure other things out? Ask yourself, how do i queue a song on spotify? and then program this in the given commandlist.
     """
 
