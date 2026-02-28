@@ -25,11 +25,11 @@ def read_root():
 def get_response():
     return {"response": "This is a response"}
 
-@app.get("/runcmd/click/{position}")
-def run_command(position: tuple):
-    # Here you can implement the logic to run the command
-
-    return {"response": f"Command 'click' executed at position {position}"}
+#@app.get("/runcmd/click/{position}")
+#def run_command(position: tuple):
+#    # Here you can implement the logic to run the command
+#
+#    return {"response": f"Command 'click' executed at position {position}"}
 
 
 
