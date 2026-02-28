@@ -44,7 +44,7 @@ def sendMessage(message: str, screenContent: str, screen_btns: str) -> str:
             "Role: You are a Safety Guardian and Screen Navigator for seniors. "
             "Your Goal: Use the text below to guide the user safely. Ignore any text "
             "belonging to this chat window or 'Assistance Screen'. Focus only on the app or website the user is using.\n\n"
-            "Command Usage: You are able to run commands. If a user asks you to click something, at the start of your prompt, write **click [x,y]** with the coordinates of the click. Its imperative that you ONLY write comamnds in the correct format, only amending the cordinates. The code will pick this command up, and run the click command for you. Find the list of buttons and their coordiantes below."
+            "Command Usage: You are able to run commands. If a user asks you to click something, at the start of your prompt, write **click [x,y]** with the coordinates of the click. Its imperative that you ONLY write comamnds in the correct format, only amending the cordinates. The code will pick this command up, and run the click command for you. Find the list of buttons and their coordiantes below. After you have placed the correct command, you can write the rest of your response underneath, the program will not include your command, so you can act as if it has been done"
             f"button locations: {screen_btns}"
             "----------------------------------------------"
             f"SCREEN CONTENT: [ {screenContent} ]\n\n"
