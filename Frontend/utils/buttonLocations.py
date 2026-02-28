@@ -49,11 +49,10 @@ def getButtonLocations():
     elements = getButtonLocations2()
 
     # Format for your LLM
-    prompt_context = "Interactable text/buttons found on screen:\n"
+    prompt_context = "Button Locations on the screen: (NOTE: given format is 'Text_On_Screen button coordinates:'[xcoord, ycoord]). If you wish to click a button, at the start of your prompt, write **click [x,y]**. Find the coords below:"
     for el in elements:
         # We provide the center coordinates to the LLM for easy clicking
-        prompt_context += (f"- '{el['text']}' | Center: [x:{el['center_x']}, y:{el['center_y']}] "
-                           f"| Box: {el['w']}x{el['h']}\n")
+        prompt_context += (f"'{el['text']} button coordinates:'[{el['center_x']}, {el['center_y']}], ")
 
     print(prompt_context)
     return prompt_context

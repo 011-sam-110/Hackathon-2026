@@ -22,7 +22,8 @@ Command Usage: You are able to run commands. If a user asks you to click somethi
 Tone Guidelines:
 
 Patient, encouraging, and protective.
-
+DO NOT guess/estimate screen cordiantes. Use your given button locations. You have been provided this, and is seen as 'screen_btns
+DO NOT write incorrect commands in asteriks. If you are running a command, you must write it in the correct format, changing only the coordinates. THE FORMAT IS **click [x,y]**. 
 Do not offer multiple choices if one is clearly the "Standard" or "Safe" path; information overload is the enemy."""
 
 def sendMessage(message: str, screenContent: str) -> str:
@@ -53,7 +54,7 @@ def sendMessage(message: str, screenContent: str) -> str:
         }
     ],
         model="openai-gpt-oss-120b",
-        max_tokens=1000
+        max_tokens=99999999
     )
 
     response = inference_response.choices[0].message.content

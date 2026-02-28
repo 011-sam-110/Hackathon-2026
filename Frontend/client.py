@@ -13,6 +13,8 @@ def sendQuery(userPrompt):
         "screen_text": screenText,
         "screen_btns": buttonLocations,
     }
+    print("-"*50)
+    print(payload)
     response = requests.post(
         f"{NGROK_URL}/upload-text", 
         json=payload
