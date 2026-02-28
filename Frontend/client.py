@@ -1,15 +1,17 @@
 import requests, os
 from dotenv import load_dotenv
 from utils.getScreen import getScreenText
+from utils.buttonLocations import getButtonLocations
 
 load_dotenv()
 NGROK_URL = os.getenv("NGROK_URL")
 def sendQuery(userPrompt):
-    print("test")
     screenText = getScreenText()
+    buttonLocations = getButtonLocations()
     payload = {
         "user_prompt": userPrompt, 
-        "screen_text": screenText
+        "screen_text": screenText,
+        "screen_btns": buttonLocations,
     }
     response = requests.post(
         f"{NGROK_URL}/upload-text", 
