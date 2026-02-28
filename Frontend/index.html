@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>The Navigator AI Assistant Sidepanel</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;500;700;800&family=Noto+Sans:wght@400;700&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#13ec13",
+                        "nav-blue": "#002b5c",
+                        "paper": "#fdfaf1",
+                        "safety-orange": "#ff8c00",
+                        "background-light": "#f6f8f6",
+                        "background-dark": "#102210",
+                    },
+                    fontFamily: {
+                        "display": ["Lexend", "sans-serif"],
+                        "reading": ["Noto Sans", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.5rem", "lg": "1rem", "xl": "1.5rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        .paper-texture {
+            background-color: #fdfaf1;
+            background-image: radial-gradient(#e5e1d3 0.5px, transparent 0.5px);
+            background-size: 20px 20px;
+        }
+        .large-text {
+            font-size: 1.25rem; /* 20px */
+            line-height: 1.75rem;
+        }
+        .active-glow-primary:focus-within {
+            box-shadow: 0 0 0 4px #13ec13;
+        }
+    </style>
+</head>
+<body class="bg-slate-200 font-display">
+<script src="main.js" defer></script>
+<!-- Desktop Sidepanel Wrapper (Simulating a 300px sidebar on a desktop) -->
+<div class="flex justify-end min-h-screen">
+<div class="w-[350px] h-screen bg-background-light dark:bg-background-dark border-l-4 border-nav-blue flex flex-col shadow-2xl overflow-hidden">
+<!-- 1. Header: Thick Deep Blue bar -->
+<header class="bg-nav-blue px-2 py-2 flex items-center justify-between scale-90">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-2xl">explore</span>
+<h1 class="text-white text-lg font-extrabold tracking-tight">THE NAVIGATOR</h1>
+</div>
+<div class="flex gap-2">
+<button class="bg-white/10 hover:bg-white/20 text-white p-1 rounded-lg flex items-center justify-center transition-colors">
+<span class="material-symbols-outlined text-2xl">help</span>
+</button>
+<button class="bg-white/10 hover:bg-white/20 text-white p-1 rounded-lg flex items-center justify-center transition-colors">
+<span class="material-symbols-outlined text-2xl">close</span>
+</button>
+</div>
+</header>
+<!-- Split the panel: Top (output) larger, bottom (input) smaller -->
+<div class="flex flex-col flex-1 min-h-0" style="font-size:0.85rem;">
+    <div class="flex-[2.5] min-h-0 overflow-y-auto paper-texture p-3 border-b-2 border-slate-200 relative">
+        <div class="sticky top-0 flex justify-end mb-2">
+            <button class="flex items-center gap-2 bg-nav-blue text-white px-3 py-1 rounded-full font-bold shadow-md hover:scale-105 transition-transform text-xs">
+                <span class="material-symbols-outlined">volume_up</span>
+                <span>Read Aloud</span>
+            </button>
+        </div>
+        <div id="message-history" class="space-y-3">
+            <div class="bg-white p-2 rounded-xl border-2 border-slate-200 shadow-sm">
+                <p class="text-slate-900 font-reading large-text font-bold text-base">
+                    Welcome back! How can I help you today?
+                </p>
+            </div>
+            <div class="bg-white p-2 rounded-xl border-2 border-slate-200 shadow-sm">
+                <p class="text-slate-900 font-reading large-text font-bold text-base">
+                    I can help you read your emails, find your photos, or explain what's on your screen. Just type your question below or use the green buttons.
+                </p>
+            </div>
+        </div>
+    </div>
+    <!-- 3. Prompt Field & Controls Area -->
+    <div class="flex-[1] min-h-0 p-2 space-y-2 bg-background-light dark:bg-background-dark" style="font-size:0.85rem;">
+<!-- Prompt Field -->
+<div class="active-glow-primary rounded-xl transition-all">
+<label class="sr-only">Your Question</label>
+<textarea class="w-full h-24 p-4 border-4 border-slate-300 rounded-xl bg-white text-black font-reading large-text font-bold focus:border-primary focus:ring-0 placeholder:text-slate-400" placeholder="Type your question here..."></textarea>
+</div>
+<!-- 4. Action Row: Large rectangular green button -->
+<button id="ask-btn" class="w-full py-5 bg-primary hover:bg-green-500 text-nav-blue rounded-xl flex items-center justify-center gap-3 shadow-lg transform active:scale-95 transition-all">
+<span class="material-symbols-outlined text-4xl font-bold">send</span>
+<span class="text-2xl font-black uppercase tracking-wider">ASK</span>
+</button>
+<!-- 5. Smart Toggles -->
+<div class="grid grid-cols-2 gap-3">
+<button class="flex flex-col items-center justify-center p-4 bg-white border-4 border-primary rounded-xl shadow-[0_4px_0_0_rgba(19,236,19,0.3)] hover:bg-primary/10 transition-colors">
+<span class="material-symbols-outlined text-4xl text-primary mb-1" style="font-variation-settings: 'FILL' 1">visibility</span>
+<span class="text-sm font-bold text-nav-blue text-center leading-tight">Look at Screen</span>
+</button>
+<button class="flex flex-col items-center justify-center p-4 bg-white border-4 border-safety-orange rounded-xl shadow-[0_4px_0_0_rgba(255,140,0,0.3)] hover:bg-safety-orange/10 transition-colors">
+<span class="material-symbols-outlined text-4xl text-safety-orange mb-1" style="font-variation-settings: 'FILL' 1">back_hand</span>
+<span class="text-sm font-bold text-nav-blue text-center leading-tight">Help me Click</span>
+</button>
+</div>
+<!-- 6. Safety Net -->
+<button class="w-full py-3 bg-slate-200 hover:bg-slate-300 text-slate-700 rounded-xl flex items-center justify-center gap-2 border-2 border-slate-300 transition-colors">
+<span class="material-symbols-outlined">restart_alt</span>
+<span class="font-bold text-lg">Undo / Clear All</span>
+</button>
+</div>
+<!-- Footer Status -->
+<footer class="bg-slate-100 px-4 py-2 border-t border-slate-200 flex justify-between items-center">
+<div class="flex items-center gap-2 text-slate-600">
+<div class="w-3 h-3 bg-primary rounded-full animate-pulse"></div>
+<span class="text-xs font-bold uppercase">System Ready</span>
+</div>
+<span class="text-xs text-slate-400 font-medium">Navigator v2.4</span>
+</footer>
+</div>
+</div>
+</body>
+</html>
