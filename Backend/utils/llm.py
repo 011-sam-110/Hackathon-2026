@@ -78,7 +78,7 @@ def sendMessage(message: str, screenContent: str, screen_btns: str, history: lis
 
     inference_response = inference_client.chat.completions.create(
         messages=messages,
-        model="DeepSeek-R1-Distill-Llama-70B",
+        model="GPT-4o",
         max_tokens=4000,
     )
 
