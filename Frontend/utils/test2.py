@@ -1,4 +1,4 @@
-command = "presskey [enter]"
+command = "hotkey [ctrl,k]"
 
 import pyautogui
 import time
@@ -12,6 +12,10 @@ def click(args):
     print("clicking")
     coords = args.split(",")
     pyautogui.click(int(coords[0]), int(coords[1]))
+
+def hotkey(args):
+    coords = args.split(",")
+    pyautogui.hotkey(coords[0], coords[1])
 
 def executeCommand(command):
     
@@ -31,6 +35,8 @@ def executeCommand(command):
         pyautogui.press(args)
     elif cmd.strip() == "loop":
         pass
+    elif cmd.strip() == "hotkey":
+        hotkey(args)
     
 
 time.sleep(1)

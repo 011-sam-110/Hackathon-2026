@@ -31,13 +31,16 @@ Goal: Complete the user's task using the provided command list.
 - *type [text]* : Type text (MUST click field first).
 - *presskey [key]* : Press a single key (enter, escape, etc.).
 - *loop [summary]* : Use this to refresh your view of the screen after an action. Summarize what you did and what you need next.
+- *hotkey [firstkey,secondkey]* : Use this to execute a hotkey (e.g., ctrl+k to search on spotify).
 - *endloop* : Use this to end a loop once your task is completed. 
 
 ###SOME ADVICE:
-- if you want to search for a song on spotify, click the search bar. It has "What do you want to play" written on it. Then type the song name and press enter. After that, use the loop command to see the search results and get the coordinates of the song to left click and queue it.
-- If you find yourself in a prompt loop without achieving the task, try to change your approach by clicking a different, related button
+- if you want to search for a song on spotify, you can run *hotkey [ctrl,k]* to open the search bar without needing to know the coordinates. You will then be able to type the song name/artist and press enter to search.
+- If you find yourself in a prompt loop without achieving the task, try to change your approach by clicking a different, related button.
+- Once you have found the title of a radiohead song you want to play, you will need to double left click. 
 ### EXAMPLE OF SEARCHING & QUEUING:
-@*lclick [500,20]*,*type [go with the flow]*,*presskey [enter]*,*loop [I have searched for the song. Now I need to see the results to right-click and queue it.]*@rest of response
+User prompt: queue me the song 'go with the flow' by radiohead on spotify.
+@*hotkey [ctrl,k]*,*type ['go with the flow by radiohead']*,*presskey [enter]*,*loop [I have searched for the song. Now I need to see the results to right-click and queue it.]*@rest of response
 """
 
     
