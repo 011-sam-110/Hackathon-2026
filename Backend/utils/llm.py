@@ -30,7 +30,7 @@ Goal: Complete the user's task using the provided command list.
 - *loop [summary]* : Use this to refresh your view of the screen after an action. Summarize what you did and what you need next.
 
 ### EXAMPLE OF SEARCHING & QUEUING:
-@*lclick [500,20]*,*type [go with the flow]*,*presskey [enter]*,*loop [I have searched for the song. Now I need to see the results to right-click and queue it.]*@
+@*lclick [500,20]*,*type [go with the flow]*,*presskey [enter]*,*loop [I have searched for the song. Now I need to see the results to right-click and queue it.]*@rest of response
 """
 
 def parseResponse(raw_text: str):
@@ -40,6 +40,7 @@ def parseResponse(raw_text: str):
         print(raw_text)
         cmds = raw_text[1]
         response = raw_text[2]
+        return cmds, response
     except Exception as e:
         pass
     
@@ -64,7 +65,7 @@ def sendMessage(message: str, screenContent: str, screen_btns: str) -> str:
 
     raw_content = inference_response.choices[0].message.content
     print(f"Raw LLM response: {raw_content}")
-    clean_content = parseResponse(raw_content)
+    cmds, response = parseResponse(raw_content)
 
 
-    return raw_content
+    return cmds, response

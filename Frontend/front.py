@@ -14,13 +14,13 @@ import pyautogui
 
 class Api:
     def ask(self, question):
-        ai_response = client.sendQuery(question)
+        cmds, response = client.sendQuery(question)
 
-        print(f"AI full response: {ai_response}")
-
-
-
-        return {"response": ai_response}
+        print(f"AI full response: {response}")
+        print("Command list:")
+        for each in cmds:
+            print(each)
+        return {"response": response}
 
 def get_html_path():
     return os.path.join(os.path.dirname(__file__), "index.html")
