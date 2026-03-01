@@ -4,27 +4,29 @@ from utils.buttonLocations import getScreenData
 
 load_dotenv()
 NGROK_URL = os.getenv("NGROK_URL")
-def sendQuery(userPrompt):
+
+def sendQuery(userPrompt, history=None):
     screenText, buttonLocations = getScreenData()
     payload = {
-        "user_prompt": userPrompt, 
+        "user_prompt": userPrompt,
         "screen_text": screenText,
         "screen_btns": buttonLocations,
+        "history": history,
     }
-    print("-"*50)
+    print("-" * 50)
     response = requests.post(
-        f"{NGROK_URL}/upload-text", 
-        json=payload
+        f"{NGROK_URL}/upload-text",
+        json=payload,
     )
     print(response)
     try:
-        # Try to get JSON response with 'response' key
         data = response.json()
-        if 'response' in data:
-            return data['response']
-        return response.text
+        return {
+            "response": data.get("response", response.text),
+            "user_prompt_used": data.get("user_prompt_used", ""),
+        }
     except Exception:
-        return response.text
-    
+        return {"response": response.text, "user_prompt_used": ""}
+
 if __name__ == "__main__":
     sendQuery("What is on my screen?")

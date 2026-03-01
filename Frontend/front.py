@@ -98,10 +98,12 @@ def build_loop_system_prompt(original_question, context):
     return (
         f"ORIGINAL USER REQUEST: {original_question}\n"
         f"LOOP CONTINUATION — The screen has been refreshed with new data.\n"
-        f"PREVIOUS ACTIONS: {context}\n"
-        "Continue working on the original request above. "
+        f"YOUR LAST LOOP SUMMARY: {context}\n"
+        "Review your previous actions in the conversation history above. "
+        "Do NOT repeat commands you already executed. "
+        "Continue working toward completing the original request. "
         "If the task is STILL not complete, you MUST end with *loop [summary]*. "
-        "If the task IS complete, use *endloop* as your last command."
+        "If the task IS complete, use *endloop [done]* as your last command."
     )
 
 
@@ -113,16 +115,26 @@ class Api:
         current_question = question
         response = ""
         continuation_count = 0
+        conversation_history = []
 
         while True:
-            returnVal = client.sendQuery(current_question)
+            result = client.sendQuery(current_question, history=conversation_history)
 
-            cmds, response = parseResponse(returnVal)
+            raw_response = result.get("response", "")
+            user_prompt_used = result.get("user_prompt_used", "")
+
+            conversation_history.append({"role": "user", "content": user_prompt_used})
+            conversation_history.append({"role": "assistant", "content": raw_response})
+
+            cmds, response = parseResponse(raw_response)
 
             justLooped = False
             unstackedCommands = unstackCommands(cmds)
             for eachCommand in unstackedCommands:
-                executeCommand(eachCommand)
+                try:
+                    executeCommand(eachCommand)
+                except Exception as e:
+                    print(f"Error executing command '{eachCommand}': {e}")
                 time.sleep(COMMAND_DELAY_SECONDS)
 
             if not justLooped:
@@ -136,6 +148,8 @@ class Api:
             time.sleep(LOOP_SETTLE_SECONDS)
             current_question = build_loop_system_prompt(original_question, loopContext)
 
+        response = response.replace("\\", "").replace("n", "")
+        response = response[:-1]
         return {"response": response}
 
 def get_html_path():

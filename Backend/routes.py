@@ -1,3 +1,4 @@
+from typing import Optional, List
 from fastapi import FastAPI
 from pydantic import BaseModel
 import uvicorn
@@ -10,10 +11,15 @@ LOG = logging.getLogger(__name__)
 LOG.info("API is starting up")
 LOG.info(uvicorn.Config.asgi_version)
 
+class MessageEntry(BaseModel):
+    role: str
+    content: str
+
 class LargeTextData(BaseModel):
     user_prompt: str
     screen_text: str
-    screen_btns : str
+    screen_btns: str
+    history: Optional[List[MessageEntry]] = None
 
 
 
@@ -38,8 +44,12 @@ def receive_text(data: LargeTextData):
     print(f"User said: {data.user_prompt}")
     print(f"Screen contained {len(data.screen_text)} characters")
     print(f"Screen buttons: {data.screen_btns}")
-    
-    response = llm.sendMessage(data.user_prompt, data.screen_text, data.screen_btns)
 
-    LOG.info(f"LLM response: {response}")
-    return response
+    history = None
+    if data.history:
+        history = [{"role": m.role, "content": m.content} for m in data.history]
+
+    result = llm.sendMessage(data.user_prompt, data.screen_text, data.screen_btns, history)
+
+    LOG.info(f"LLM response: {result['response']}")
+    return result

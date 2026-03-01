@@ -49,7 +49,7 @@ If the task requires more than one step and is NOT fully complete, your LAST com
 """
 
     
-def sendMessage(message: str, screenContent: str, screen_btns: str) -> str:
+def sendMessage(message: str, screenContent: str, screen_btns: str, history: list = None) -> dict:
     user_prompt = (
         f"--- CURRENT SCREEN STATE ---\n"
         f"BUTTON LOCATIONS: {screen_btns}\n"
@@ -62,11 +62,13 @@ def sendMessage(message: str, screenContent: str, screen_btns: str) -> str:
         "REMEMBER: If the task is not fully complete, your LAST command MUST be *loop [summary]*."
     )
 
+    messages = [{"role": "system", "content": SYSTEM_GUIDELINES}]
+    if history:
+        messages.extend(history)
+    messages.append({"role": "user", "content": user_prompt})
+
     inference_response = inference_client.chat.completions.create(
-        messages=[
-            {"role": "system", "content": SYSTEM_GUIDELINES},
-            {"role": "user", "content": user_prompt},
-        ],
+        messages=messages,
         model="DeepSeek-R1-Distill-Llama-70B",
         max_tokens=4000,
     )
@@ -74,4 +76,4 @@ def sendMessage(message: str, screenContent: str, screen_btns: str) -> str:
     raw_content = inference_response.choices[0].message.content
     print(f"Raw LLM response: {raw_content}")
 
-    return raw_content
+    return {"response": raw_content, "user_prompt_used": user_prompt}
