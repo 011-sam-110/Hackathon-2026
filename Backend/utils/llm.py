@@ -26,6 +26,7 @@ Goal: Complete the user's task using the provided command list.
 ### COMMAND LIST:
 - *lclick [x,y]* : Left click coordinates.
 - *rclick [x,y]* : Right click coordinates (for context menus).
+- *dclick [x,y]* : Double click coordinates (sometimes needed to open files or folders, or for playing songs)
 - *type [text]* : Type text (MUST click field first).
 - *presskey [key]* : Press a single key (enter, escape, etc.).
 - *loop [summary]* : Use this to refresh your view of the screen after an action. Summarize what you did and what you need next.

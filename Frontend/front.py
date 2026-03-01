@@ -45,6 +45,11 @@ def click(args):
     coords = args.split(",")
     pyautogui.click(int(coords[0]), int(coords[1]))
 
+def dclick(args):
+    print("double clicking")
+    coords = args.split(",")
+    pyautogui.click(int(coords[0]), int(coords[1]), clicks=2)
+
 def executeCommand(command):
     time.sleep(1)
     global justLooped, loopContext
@@ -58,6 +63,8 @@ def executeCommand(command):
         click(args)
     elif cmd.strip() == "rclick":
         rclick(args)
+    elif cmd.strip() == "dclick":
+        dclick(args)
     elif cmd.strip() == "type":
         pyautogui.typewrite(args)
     elif cmd.strip() == "presskey":
