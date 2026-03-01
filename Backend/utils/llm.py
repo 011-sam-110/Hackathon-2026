@@ -32,7 +32,7 @@ Goal: Complete the user's task using the provided command list.
 - *presskey [key]* : Press a single key (enter, escape, etc.).
 - *loop [summary]* : Use this to refresh your view of the screen after an action. Summarize what you did and what you need next.
 - *hotkey [firstkey,secondkey]* : Use this to execute a hotkey (e.g., ctrl+k to search on spotify).
-- *endloop* : Use this to end a loop once your task is completed. 
+- *endloop [placeholder]* : Use this to end a loop once your task is completed. 
 
 ### EXAMPLE OF CORRECT RESPONSE:
 User asks: "Play Bohemian Rhapsody on Spotify"
