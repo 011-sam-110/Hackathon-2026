@@ -29,8 +29,10 @@ class Api:
         ai_response = client.sendQuery(question)
 
         print(f"AI full response: {ai_response}")
+        cmds, prompt = extractCMD(ai_response)
+        print(f"commands: {cmds}, prompt: {prompt}")
 
-        
+#AI full response: {"commands":["lclick [2532,1281]","loop [I have clicked on the \"play songs from radiohead, a\" button. I need to see if the action was successful and if the songs are loading.]"],"message":""}
 
 
         return {"response": ai_response}
