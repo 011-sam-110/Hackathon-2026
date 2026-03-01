@@ -35,13 +35,12 @@ Goal: Complete the user's task using the provided command list.
 
 def parseResponse(raw_text: str):
     #['\n\n', '*lclick [1193,55]*,*type [radiohead]*,*presskey [enter]*,*loop [I have searched for Radiohead. Now I need to see the results to right-click and queue it.]', "  \nI've searched for Radiohead and will queue a song once the results load."]
-    try:
-        raw_text = raw_text.split("@")
-        cmds = raw_text[1]
-        response = raw_text[2]
-        return cmds, response
-    except Exception as e:
-        pass
+    
+    raw_text = raw_text.split("@")
+    cmds = raw_text[1]
+    response = raw_text[2]
+    return cmds, response
+
     
 def sendMessage(message: str, screenContent: str, screen_btns: str) -> str:
     full_prompt = (
@@ -64,7 +63,7 @@ def sendMessage(message: str, screenContent: str, screen_btns: str) -> str:
 
     raw_content = inference_response.choices[0].message.content
     print(f"Raw LLM response: {raw_content}")
-    cmds, response = parseResponse(raw_content)
+    
 
 
-    return cmds, response
+    return raw_content
