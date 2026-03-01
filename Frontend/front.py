@@ -52,6 +52,10 @@ def dclick(args):
     coords = args.split(",")
     pyautogui.click(int(coords[0]), int(coords[1]), clicks=2)
 
+def hotkey(args):
+    coords = args.split(",")
+    pyautogui.hotkey(coords[0], coords[1])
+
 def executeCommand(command):
     
     global justLooped, loopContext
@@ -71,6 +75,8 @@ def executeCommand(command):
         pyautogui.typewrite(args)
     elif cmd.strip() == "presskey":
         pyautogui.press(args)
+    elif cmd.strip() == "hotkey":
+        hotkey(args)
     elif cmd.strip() == "loop":
         loopContext = args
         justLooped = True
