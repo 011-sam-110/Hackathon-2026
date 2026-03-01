@@ -75,5 +75,7 @@ def sendMessage(message: str, screenContent: str, screen_btns: str) -> str:
         "commands": commands,
         "message": clean_message
     }
-    print(output)
+    print("log info")
+    print(output["commands"])
+    print(output["message"])
     return output
