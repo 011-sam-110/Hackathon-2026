@@ -38,6 +38,8 @@ def parseResponse(raw_text: str):
     try:
         raw_text = raw_text.split("@")
         print(raw_text)
+    except Exception as e:
+        pass
     
 def sendMessage(message: str, screenContent: str, screen_btns: str) -> str:
     full_prompt = (
