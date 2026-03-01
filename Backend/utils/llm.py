@@ -1,3 +1,4 @@
+from curses import raw
 import os
 import re
 from gradient import Gradient
@@ -32,28 +33,12 @@ Goal: Complete the user's task using the provided command list.
 @*lclick [500,20]*,*type [go with the flow]*,*presskey [enter]*,*loop [I have searched for the song. Now I need to see the results to right-click and queue it.]*@
 """
 
-def parse_ai_response(raw_text: str):
-    # 1. Find the block between @ symbols
-    command_match = re.search(r'@(.*?)@', raw_text, re.DOTALL)
+def parseResponse(raw_text: str):
+    #"\n\n@*lclick [215,969]*,*loop [I clicked on Radiohead. Now I need to see the song options to right-click and queue it.]*@"
+    try:
+        raw_text = raw_text.split("@")
+        print(raw_text)
     
-    if command_match:
-        command_block = command_match.group(1).strip()
-        
-        # 2. SMART SPLIT: 
-        # This regex says: Split at a comma, but ONLY if the next character 
-        # (ignoring spaces) is an asterisk.
-        raw_commands = re.split(r',\s*(?=\*)', command_block)
-        
-        # 3. Clean up the asterisks and whitespace
-        commands = [cmd.strip().strip('*') for cmd in raw_commands if cmd.strip()]
-        
-        # 4. Extract the message
-        user_message = re.sub(r'@.*?@', '', raw_text).strip()
-        
-        return commands, user_message
-    
-    return [], raw_text.strip()
-
 def sendMessage(message: str, screenContent: str, screen_btns: str) -> str:
     full_prompt = (
         f"{SYSTEM_GUIDELINES}\n"
@@ -75,7 +60,7 @@ def sendMessage(message: str, screenContent: str, screen_btns: str) -> str:
 
     raw_content = inference_response.choices[0].message.content
     print(f"Raw LLM response: {raw_content}")
-    print(raw_content)
+    clean_content = parseResponse(raw_content)
 
 
     return raw_content
