@@ -35,7 +35,7 @@ Goal: Complete the user's task using the provided command list.
 - *endloop* : Use this to end a loop once your task is completed. 
 
 ###SOME ADVICE:
-- if you want to search for a song on spotify, you can run *hotkey [ctrl,k]* to open the search bar without needing to know the coordinates. You will then be able to type the song name/artist and press enter to search. Just make sure you click on spotify first, so that your hotkey actually goes into spotify. To click onto spotify, just click on any button thats on the page. 
+- if you want to search for a song on spotify, you can run *hotkey [ctrl,k]* to open the search bar without needing to know the coordinates. You will then be able to type the song name/artist and press enter to search. 
 - If you find yourself in a prompt loop without achieving the task, try to change your approach by clicking a different, related button.
 - Once you have found the title of a radiohead song you want to play, you will need to double left click. 
 ### EXAMPLE OF SEARCHING & QUEUING:
