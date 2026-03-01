@@ -15,6 +15,8 @@ import time
 justLooped = False
 loopContext = ""
 MAX_LOOP_CONTINUATIONS = 5
+COMMAND_DELAY_SECONDS = 1.0
+LOOP_SETTLE_SECONDS = 2.5
 
 def parseResponse(raw_text: str):
     #['\n\n', '*lclick [1193,55]*,*type [radiohead]*,*presskey [enter]*,*loop [I have searched for Radiohead. Now I need to see the results to right-click and queue it.]', "  \nI've searched for Radiohead and will queue a song once the results load."]
@@ -72,6 +74,8 @@ def executeCommand(command):
     elif cmd.strip() == "loop":
         loopContext = args
         justLooped = True
+    elif cmd.strip() == "endloop":
+        justLooped = False
     
 
 def unstackCommands(cmds):
@@ -107,8 +111,8 @@ class Api:
             justLooped = False
             unstackedCommands = unstackCommands(cmds)
             for eachCommand in unstackedCommands:
-                time.sleep(1)
                 executeCommand(eachCommand)
+                time.sleep(COMMAND_DELAY_SECONDS)
 
             if not justLooped:
                 break
@@ -118,6 +122,7 @@ class Api:
                 response = f"{response}\n\nStopped after {MAX_LOOP_CONTINUATIONS} loop continuations for safety."
                 break
 
+            time.sleep(LOOP_SETTLE_SECONDS)
             current_question = build_loop_system_prompt(loopContext)
 
         return {"response": response}

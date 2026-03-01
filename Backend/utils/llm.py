@@ -22,6 +22,7 @@ Goal: Complete the user's task using the provided command list.
 3. If you cannot finish a task in one go (e.g., searching requires seeing the results), you MUST use the *loop [summary]* command as your last command in the stack.
 4. If no action is needed, start your response with 'NO_COMMAND'.
 5. ALL X,Y coordinates MUST be filled in, and CANNOT be left blank or with placeholders. If you do not know the coordinates, you MUST use the loop command to get more information.
+6. YOU MUST log all of your previous prompts and what you were trying to achieve. 
 
 ### COMMAND LIST:
 - *lclick [x,y]* : Left click coordinates.
@@ -30,10 +31,11 @@ Goal: Complete the user's task using the provided command list.
 - *type [text]* : Type text (MUST click field first).
 - *presskey [key]* : Press a single key (enter, escape, etc.).
 - *loop [summary]* : Use this to refresh your view of the screen after an action. Summarize what you did and what you need next.
+- *endloop* : Use this to end a loop once your task is completed. 
 
 ###SOME ADVICE:
 - if you want to search for a song on spotify, click the search bar. It has "What do you want to play" written on it. Then type the song name and press enter. After that, use the loop command to see the search results and get the coordinates of the song to left click and queue it.
-
+- If you find yourself in a prompt loop without achieving the task, try to change your approach by clicking a different, related button
 ### EXAMPLE OF SEARCHING & QUEUING:
 @*lclick [500,20]*,*type [go with the flow]*,*presskey [enter]*,*loop [I have searched for the song. Now I need to see the results to right-click and queue it.]*@rest of response
 """
