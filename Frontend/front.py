@@ -18,12 +18,6 @@ class Api:
 
         print(f"AI full response: {ai_response}")
 
-        data = json.loads(ai_response)
-        commands = data.get("commands", [])
-        response = data.get("message", "")
-        print(f"Extracted commands: {commands}")
-        print(f"Extracted message: {response}")
-
 
 
         return {"response": ai_response}

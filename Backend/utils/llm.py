@@ -34,10 +34,12 @@ Goal: Complete the user's task using the provided command list.
 """
 
 def parseResponse(raw_text: str):
-    #"\n\n@*lclick [215,969]*,*loop [I clicked on Radiohead. Now I need to see the song options to right-click and queue it.]*@"
+    #['\n\n', '*lclick [1193,55]*,*type [radiohead]*,*presskey [enter]*,*loop [I have searched for Radiohead. Now I need to see the results to right-click and queue it.]', "  \nI've searched for Radiohead and will queue a song once the results load."]
     try:
         raw_text = raw_text.split("@")
         print(raw_text)
+        cmds = raw_text[1]
+        response = raw_text[2]
     except Exception as e:
         pass
     
