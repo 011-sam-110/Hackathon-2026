@@ -51,7 +51,7 @@ def dclick(args):
     pyautogui.click(int(coords[0]), int(coords[1]), clicks=2)
 
 def executeCommand(command):
-    time.sleep(1)
+    
     global justLooped, loopContext
 #   execute commands here
     command = command.split("[")
@@ -107,6 +107,7 @@ class Api:
             justLooped = False
             unstackedCommands = unstackCommands(cmds)
             for eachCommand in unstackedCommands:
+                time.sleep(1)
                 executeCommand(eachCommand)
 
             if not justLooped:

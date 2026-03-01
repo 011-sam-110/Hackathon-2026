@@ -31,6 +31,9 @@ Goal: Complete the user's task using the provided command list.
 - *presskey [key]* : Press a single key (enter, escape, etc.).
 - *loop [summary]* : Use this to refresh your view of the screen after an action. Summarize what you did and what you need next.
 
+###SOME ADVICE:
+- if you want to search for a song on spotify, click the search bar. It has "What do you want to play" written on it. Then type the song name and press enter. After that, use the loop command to see the search results and get the coordinates of the song to left click and queue it.
+
 ### EXAMPLE OF SEARCHING & QUEUING:
 @*lclick [500,20]*,*type [go with the flow]*,*presskey [enter]*,*loop [I have searched for the song. Now I need to see the results to right-click and queue it.]*@rest of response
 """
