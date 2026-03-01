@@ -37,7 +37,6 @@ def parseResponse(raw_text: str):
     #['\n\n', '*lclick [1193,55]*,*type [radiohead]*,*presskey [enter]*,*loop [I have searched for Radiohead. Now I need to see the results to right-click and queue it.]', "  \nI've searched for Radiohead and will queue a song once the results load."]
     try:
         raw_text = raw_text.split("@")
-        print(raw_text)
         cmds = raw_text[1]
         response = raw_text[2]
         return cmds, response

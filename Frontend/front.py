@@ -14,8 +14,9 @@ import pyautogui
 
 class Api:
     def ask(self, question):
-        cmds, response = client.sendQuery(question)
+        returnVal = client.sendQuery(question)
 
+        cmds, response = returnVal
         print(f"AI full response: {response}")
         print("Command list:")
         for each in cmds:
