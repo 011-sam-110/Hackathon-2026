@@ -94,10 +94,14 @@ def unstackCommands(cmds):
     return prompts
 
 
-def build_loop_system_prompt(context):
+def build_loop_system_prompt(original_question, context):
     return (
-        "**LOOP MODE**: You are in a continuation loop. Screen data has been refreshed.\n"
-        f"PREVIOUS LOOP CONTEXT: {context}"
+        f"ORIGINAL USER REQUEST: {original_question}\n"
+        f"LOOP CONTINUATION — The screen has been refreshed with new data.\n"
+        f"PREVIOUS ACTIONS: {context}\n"
+        "Continue working on the original request above. "
+        "If the task is STILL not complete, you MUST end with *loop [summary]*. "
+        "If the task IS complete, use *endloop* as your last command."
     )
 
 
@@ -105,6 +109,7 @@ class Api:
     def ask(self, question):
         global justLooped
 
+        original_question = question
         current_question = question
         response = ""
         continuation_count = 0
@@ -129,7 +134,7 @@ class Api:
                 break
 
             time.sleep(LOOP_SETTLE_SECONDS)
-            current_question = build_loop_system_prompt(loopContext)
+            current_question = build_loop_system_prompt(original_question, loopContext)
 
         return {"response": response}
 

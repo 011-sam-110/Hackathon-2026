@@ -19,7 +19,7 @@ Goal: Complete the user's task using the provided command list.
 ### COMMAND RULES:
 1. ALL commands MUST be wrapped in a single @ block at the VERY START of your response.
 2. Format: @*command1*,*command2*,*command3*@
-3. If you cannot finish a task in one go (e.g., searching requires seeing the results), you MUST use the *loop [summary]* command as your last command in the stack.
+3. If you cannot finish a task in one go (e.g., searching requires seeing the results), you MUST use the *loop [summary]* command as your LAST command in the stack. This is MANDATORY.
 4. If no action is needed, start your response with 'NO_COMMAND'.
 5. ALL X,Y coordinates MUST be filled in, and CANNOT be left blank or with placeholders. If you do not know the coordinates, you MUST use the loop command to get more information.
 6. YOU MUST log all of your previous prompts and what you were trying to achieve. 
@@ -34,36 +34,44 @@ Goal: Complete the user's task using the provided command list.
 - *hotkey [firstkey,secondkey]* : Use this to execute a hotkey (e.g., ctrl+k to search on spotify).
 - *endloop* : Use this to end a loop once your task is completed. 
 
-###SOME ADVICE:
-- if you want to search for a song on spotify, you can run *hotkey [ctrl,k]* to open the search bar without needing to know the coordinates. You will then be able to type the song name/artist. You can then loop to find the song title, and then click that button. 
+### EXAMPLE OF CORRECT RESPONSE:
+User asks: "Play Bohemian Rhapsody on Spotify"
+@*hotkey [ctrl,k]*,*type [Bohemian Rhapsody]*,*presskey [enter]*,*loop [Searched for Bohemian Rhapsody. Need to see results to find and double-click the correct song.]*@
+I've searched for Bohemian Rhapsody. Waiting for results to load so I can play it for you.
+
+### SOME ADVICE:
+- If you want to search for a song on spotify, you can run *hotkey [ctrl,k]* to open the search bar without needing to know the coordinates. You will then be able to type the song name/artist. You can then loop to find the song title, and then click that button. 
 - If you find yourself in a prompt loop without achieving the task, try to change your approach by clicking a different, related button.
-- when attempting to play a song, double click it.
-- DO NOT forget to use the loop command if you need more information to complete the task.
+- When attempting to play a song, double click it.
+
+### CRITICAL REMINDER:
+If the task requires more than one step and is NOT fully complete, your LAST command MUST be *loop [summary]*. NEVER omit the loop command when additional steps are still needed.
 """
 
     
 def sendMessage(message: str, screenContent: str, screen_btns: str) -> str:
-    full_prompt = (
-        f"{SYSTEM_GUIDELINES}\n"
+    user_prompt = (
         f"--- CURRENT SCREEN STATE ---\n"
         f"BUTTON LOCATIONS: {screen_btns}\n"
         f"SCREEN TEXT CONTENT: {screenContent}\n"
         "-----------------------------\n"
         f"USER REQUEST: {message}\n"
         "-----------------------------\n"
-        "Constraint: Provide a concise (max 5 sentences) update for the user after the command block. "
-        "Start IMMEDIATELY with the @ block."
+        "Provide a concise (max 5 sentences) update for the user after the command block. "
+        "Start IMMEDIATELY with the @ block. "
+        "REMEMBER: If the task is not fully complete, your LAST command MUST be *loop [summary]*."
     )
 
     inference_response = inference_client.chat.completions.create(
-        messages=[{"role": "user", "content": full_prompt}],
+        messages=[
+            {"role": "system", "content": SYSTEM_GUIDELINES},
+            {"role": "user", "content": user_prompt},
+        ],
         model="DeepSeek-R1-Distill-Llama-70B",
-        max_tokens=4000 # 100k is often too high for standard API calls; 4k is plenty for this.
+        max_tokens=4000,
     )
 
     raw_content = inference_response.choices[0].message.content
     print(f"Raw LLM response: {raw_content}")
-    
-
 
     return raw_content
