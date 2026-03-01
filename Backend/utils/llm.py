@@ -37,7 +37,8 @@ Goal: Complete the user's task using the provided command list.
 ###SOME ADVICE:
 - if you want to search for a song on spotify, you can run *hotkey [ctrl,k]* to open the search bar without needing to know the coordinates. You will then be able to type the song name/artist. You can then loop to find the song title, and then click that button. 
 - If you find yourself in a prompt loop without achieving the task, try to change your approach by clicking a different, related button.
-- when attempting to play a song, double click it. 
+- when attempting to play a song, double click it.
+- DO NOT forget to use the loop command if you need more information to complete the task.
 """
 
     
