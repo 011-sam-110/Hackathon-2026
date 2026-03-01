@@ -33,18 +33,23 @@ Goal: Complete the user's task using the provided command list.
 """
 
 def parse_ai_response(raw_text: str):
-    """
-    Extracts the command list and the user-facing message separately.
-    """
-    # Find everything between the first and last @ symbol
+    # 1. Find the block between @ symbols
     command_match = re.search(r'@(.*?)@', raw_text, re.DOTALL)
     
     if command_match:
-        command_block = command_match.group(1)
-        # Split the block by comma and clean up whitespace/asterisks
-        commands = [cmd.strip().strip('*') for cmd in command_block.split(',') if cmd.strip()]
-        # Remove the @ block from the text to get the clean message for the user
+        command_block = command_match.group(1).strip()
+        
+        # 2. SMART SPLIT: 
+        # This regex says: Split at a comma, but ONLY if the next character 
+        # (ignoring spaces) is an asterisk.
+        raw_commands = re.split(r',\s*(?=\*)', command_block)
+        
+        # 3. Clean up the asterisks and whitespace
+        commands = [cmd.strip().strip('*') for cmd in raw_commands if cmd.strip()]
+        
+        # 4. Extract the message
         user_message = re.sub(r'@.*?@', '', raw_text).strip()
+        
         return commands, user_message
     
     return [], raw_text.strip()
@@ -75,7 +80,4 @@ def sendMessage(message: str, screenContent: str, screen_btns: str) -> str:
         "commands": commands,
         "message": clean_message
     }
-    print("log info")
-    print(output["commands"])
-    print(output["message"])
     return output
