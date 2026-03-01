@@ -74,10 +74,8 @@ def sendMessage(message: str, screenContent: str, screen_btns: str) -> str:
     )
 
     raw_content = inference_response.choices[0].message.content
-    commands, clean_message = parse_ai_response(raw_content)
+    print(f"Raw LLM response: {raw_content}")
+    print(raw_content)
 
-    output = {
-        "commands": commands,
-        "message": clean_message
-    }
-    return output
+
+    return raw_content
