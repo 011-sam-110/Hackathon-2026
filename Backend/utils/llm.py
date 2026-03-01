@@ -37,6 +37,7 @@ Goal: Complete the user's task using the provided command list.
 ###SOME ADVICE:
 - if you want to search for a song on spotify, you can run *hotkey [ctrl,k]* to open the search bar without needing to know the coordinates. You will then be able to type the song name/artist. You can then loop to find the song title, and then click that button. 
 - If you find yourself in a prompt loop without achieving the task, try to change your approach by clicking a different, related button.
+- if you attempt to play a song, but it doesn't work, try using the double click command.
 - Once you have found the title of a song you want to play, you will need to double left click to play it, or right click, loop to find the queue button, and then press the add to queue button.
 """
 
