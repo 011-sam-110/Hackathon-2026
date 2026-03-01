@@ -7,32 +7,110 @@ from keyboard import send
 
 import tkinter as tk
 import webview
-import client
 import json
 import os
 import pyautogui
+import time
 
+justLooped = False
+loopContext = ""
+MAX_LOOP_CONTINUATIONS = 5
 
 def parseResponse(raw_text: str):
     #['\n\n', '*lclick [1193,55]*,*type [radiohead]*,*presskey [enter]*,*loop [I have searched for Radiohead. Now I need to see the results to right-click and queue it.]', "  \nI've searched for Radiohead and will queue a song once the results load."]
     print(raw_text)
-    raw_text = raw_text.split("@")
-    print(len(raw_text))
-    cmds = raw_text[0]
-    response = raw_text[1]
+    parts = raw_text.split("@")
+    print(len(parts))
+    if len(parts) < 3:
+        response = raw_text.strip()
+        if len(response) < 5:
+            response = "no provided prompt"
+        return "", response
+
+    cmds = parts[1]
+    response = parts[2].strip()
     print("commands: ", cmds)
     print("response: ", response)
-    return [cmds, response]
+    if len(response) < 5:
+        response = "no provided prompt"
+    return cmds, response
 
-        
+def rclick(args):
+    print("clicking")
+    coords = args.split(",")
+    pyautogui.click(int(coords[0]), int(coords[1]), button='right')
+
+def click(args):
+    print("clicking")
+    coords = args.split(",")
+    pyautogui.click(int(coords[0]), int(coords[1]))
+
+def executeCommand(command):
+    time.sleep(1)
+    global justLooped, loopContext
+#   execute commands here
+    command = command.split("[")
+    cmd = command[0]
+    args = command[1].replace("]","")
+    print(cmd, args)
+
+    if cmd.strip() == "lclick":
+        click(args)
+    elif cmd.strip() == "rclick":
+        rclick(args)
+    elif cmd.strip() == "type":
+        pyautogui.typewrite(args)
+    elif cmd.strip() == "presskey":
+        pyautogui.press(args)
+    elif cmd.strip() == "loop":
+        loopContext = args
+        justLooped = True
+    
+
+def unstackCommands(cmds):
+    """splits prompts into individuals, and stores in prompts"""
+    prompt = cmds.split("*")
+    prompts = []
+    for each in prompt:
+        if len(each) > 3:
+            prompts.append(each.strip())
+    return prompts
+
+
+def build_loop_system_prompt(context):
+    return (
+        "**LOOP MODE**: You are in a continuation loop. Screen data has been refreshed.\n"
+        f"PREVIOUS LOOP CONTEXT: {context}"
+    )
+
 
 class Api:
     def ask(self, question):
-        returnVal = client.sendQuery(question)
-        
-        response = parseResponse(returnVal)
-        print(f"AI full response: {response}")
-        print("Command list:")
+        global justLooped
+
+        current_question = question
+        response = ""
+        continuation_count = 0
+
+        while True:
+            returnVal = client.sendQuery(current_question)
+
+            cmds, response = parseResponse(returnVal)
+
+            justLooped = False
+            unstackedCommands = unstackCommands(cmds)
+            for eachCommand in unstackedCommands:
+                executeCommand(eachCommand)
+
+            if not justLooped:
+                break
+
+            continuation_count += 1
+            if continuation_count >= MAX_LOOP_CONTINUATIONS:
+                response = f"{response}\n\nStopped after {MAX_LOOP_CONTINUATIONS} loop continuations for safety."
+                break
+
+            current_question = build_loop_system_prompt(loopContext)
 
         return {"response": response}
 

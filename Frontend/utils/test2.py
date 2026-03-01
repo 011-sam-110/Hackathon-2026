@@ -1,36 +1,37 @@
+command = "presskey [enter]"
+
+import pyautogui
 import time
-from pywinauto import Desktop
 
-print("Click on your Browser window NOW... (3 seconds)")
-time.sleep(3)
+def rclick(args):
+    print("clicking")
+    coords = args.split(",")
+    pyautogui.click(int(coords[0]), int(coords[1]), button='right')
 
-# 1. Get the Desktop object
-desktop = Desktop(backend="uia")
+def click(args):
+    print("clicking")
+    coords = args.split(",")
+    pyautogui.click(int(coords[0]), int(coords[1]))
 
-# 2. Get the actual active window (the one you just clicked)
-# top_window() is more reliable for 'active' than indexing windows()
-try:
-    window = desktop.top_window()
-    print(f"Targeting active window: {window.window_text()}")
-
-    # 3. Use descendants with a filter instead of child_window
-    # This is more resilient to the 'UIAWrapper' attribute issue
-    all_elements = window.descendants(control_type="Document")
+def executeCommand(command):
     
-    if not all_elements:
-        print("No 'Document' (web content) found. Trying to find all buttons in the whole window instead...")
-        buttons = window.descendants(control_type="Button")
-    else:
-        # Use the first Document found (the webpage)
-        web_content = all_elements[0]
-        buttons = web_content.descendants(control_type="Button")
+#   execute commands here
+    command = command.split("[")
+    cmd = command[0]
+    args = command[1].replace("]","")
+    print(cmd, args)
 
-    # 4. Extract Coordinates
-    for btn in buttons:
-        name = btn.window_text() or "Unnamed/Icon"
-        rect = btn.rectangle()
-        mid = rect.mid_point()
-        print(f"Button: {name:20} | Center: ({mid.x}, {mid.y})")
+    if cmd.strip() == "lclick":
+        click(args)
+    elif cmd.strip() == "rclick":
+        rclick(args)
+    elif cmd.strip() == "type":
+        pyautogui.typewrite(args)
+    elif cmd.strip() == "presskey":
+        pyautogui.press(args)
+    elif cmd.strip() == "loop":
+        pass
+    
 
-except Exception as e:
-    print(f"An error occurred: {e}")
+time.sleep(1)
+executeCommand(command)

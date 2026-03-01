@@ -21,6 +21,7 @@ Goal: Complete the user's task using the provided command list.
 2. Format: @*command1*,*command2*,*command3*@
 3. If you cannot finish a task in one go (e.g., searching requires seeing the results), you MUST use the *loop [summary]* command as your last command in the stack.
 4. If no action is needed, start your response with 'NO_COMMAND'.
+5. ALL X,Y coordinates MUST be filled in, and CANNOT be left blank or with placeholders. If you do not know the coordinates, you MUST use the loop command to get more information.
 
 ### COMMAND LIST:
 - *lclick [x,y]* : Left click coordinates.
@@ -32,14 +33,6 @@ Goal: Complete the user's task using the provided command list.
 ### EXAMPLE OF SEARCHING & QUEUING:
 @*lclick [500,20]*,*type [go with the flow]*,*presskey [enter]*,*loop [I have searched for the song. Now I need to see the results to right-click and queue it.]*@rest of response
 """
-
-def parseResponse(raw_text: str):
-    #['\n\n', '*lclick [1193,55]*,*type [radiohead]*,*presskey [enter]*,*loop [I have searched for Radiohead. Now I need to see the results to right-click and queue it.]', "  \nI've searched for Radiohead and will queue a song once the results load."]
-    
-    raw_text = raw_text.split("@")
-    cmds = raw_text[1]
-    response = raw_text[2]
-    return cmds, response
 
     
 def sendMessage(message: str, screenContent: str, screen_btns: str) -> str:
