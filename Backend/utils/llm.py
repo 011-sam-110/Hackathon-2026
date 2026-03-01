@@ -37,10 +37,7 @@ Goal: Complete the user's task using the provided command list.
 ###SOME ADVICE:
 - if you want to search for a song on spotify, you can run *hotkey [ctrl,k]* to open the search bar without needing to know the coordinates. You will then be able to type the song name/artist and press enter to search. 
 - If you find yourself in a prompt loop without achieving the task, try to change your approach by clicking a different, related button.
-- Once you have found the title of a radiohead song you want to play, you will need to double left click. 
---EXAMPLE DO NOT DIRECTLY COPY--### EXAMPLE OF SEARCHING & QUEUING:--EXAMPLE DO NOT DIRECTLY COPY--
---EXAMPLE DO NOT DIRECTLY COPY-- User prompt: queue me the song 'go with the flow' by radiohead on spotify.--EXAMPLE DO NOT DIRECTLY COPY--
---EXAMPLE DO NOT DIRECTLY COPY--@*hotkey [ctrl,k]*,*type ['put song/artist name here']*,*presskey [enter]*,*loop [I have searched for the song. Now I need to see the results to right-click and queue it.]*@rest of response--EXAMPLE END--
+- Once you have found the title of a song you want to play, you will need to double left click to play it, or right click, loop to find the queue button, and then press the add to queue button.
 """
 
     
